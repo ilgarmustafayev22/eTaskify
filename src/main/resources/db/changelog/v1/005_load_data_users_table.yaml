@@ -8,13 +8,13 @@ databaseChangeLog:
             columns:
               - column:
                   name: name
-                  value: Ilgar
+                  value: Elgun
               - column:
                   name: surname
-                  value: Mustafayev
+                  value: Mahmudov
               - column:
                   name: email
-                  value: ilgar@gmail.com
+                  value: elgun@gmail.com
               - column:
                   name: password
                   value: $2a$12$LlQ9jjBRKSCRgPCkRUi3x.67aEu9husTZa6NIEVvuoZarFn52Twja

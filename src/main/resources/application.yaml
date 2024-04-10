@@ -29,7 +29,7 @@ spring:
     host: smtp.gmail.com  # Your SMTP server host
     port: 587             # SMTP port (587 for TLS, 465 for SSL)
     username: ilqar6117@gmail.com
-    password: fqsp hsse mizt ydvu
+    password:
     properties:
       mail:
         smtp:
