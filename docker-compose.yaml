@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+
+  postgresdb:
+    image: postgres:latest
+    container_name: postgresdb
+    environment:
+      - HOST=postgresdb
+      - POSTGRES_DB=etaskify
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=mysecretpassword
+    ports:
+      - "5432:5432"
+
+  etaskify:
+    build:
+      context: .
+    image: ilgarmustafayev22/etaskify:v1
+    network_mode: host
+
+    container_name: etaskify
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgresdb

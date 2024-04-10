@@ -1,0 +1,56 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /etaskify
+
+spring:
+  application:
+    liquibase:
+      change-log: classpath:db/changelog/db.changelog-master.yaml
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://${HOST:localhost}:5432/${POSTGRES_DB:etaskify}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:mysecretpassword}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    open-in-view: false
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  mail:
+    host: smtp.gmail.com  # Your SMTP server host
+    port: 587             # SMTP port (587 for TLS, 465 for SSL)
+    username: ilqar6117@gmail.com
+    password: fqsp hsse mizt ydvu
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui
+
+application:
+  security:
+    jwt:
+      secret-key: 4xBJ9w5cTn7CxHJnJM9vJ1Sjz3B2mlLCG6vLghwFJxQ=
+      expiration: 3600000
+      refresh-token:
+        expiration: 86400000
+
+logging:
+  level:
+    org.springframework.security: trace

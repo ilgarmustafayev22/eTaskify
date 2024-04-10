@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: 005_load-data-users-table
+      author: Ilgar Mustafayev
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: name
+                  value: Ilgar
+              - column:
+                  name: surname
+                  value: Mustafayev
+              - column:
+                  name: email
+                  value: ilgar@gmail.com
+              - column:
+                  name: password
+                  value: $2a$12$LlQ9jjBRKSCRgPCkRUi3x.67aEu9husTZa6NIEVvuoZarFn52Twja
+              - column:
+                  name: role
+                  value: ADMIN
+              - column:
+                  name: organization_id
+                  value: 1
+
+
+
+

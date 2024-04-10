@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001_create-users-tasks-table
+      author: Ilgar Mustafayev
+      changes:
+        - createTable:
+            tableName: users_tasks
+            columns:
+              - column:
+                  name: task_id
+                  type: BIGINT
+              - column:
+                  name: user_id
+                  type: BIGINT

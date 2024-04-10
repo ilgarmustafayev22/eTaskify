@@ -1,0 +1,56 @@
+databaseChangeLog:
+  - changeSet:
+      id: 003_create-organization-table
+      author: Ilgar Mustafayev
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+              - column:
+                  name: company_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: phone_number
+                  type: VARCHAR(255)
+              - column:
+                  name: address
+                  type: VARCHAR(255)
+            tableName: organizations
+
+      ##  - createTable:
+      ##      tableName: tasks
+      ##      columns:
+      ##        - column:
+      ##            name: id
+      ##            type: bigserial
+      ##            autoIncrement: true
+      ##            constraints:
+      ##              primaryKey: true
+      ##              nullable: false
+      ##        - column:
+      ##            name: company_name
+      ##            type: VARCHAR(255)
+      ##            constraints:
+      ##              nullable: false
+##
+      ##        - column:
+      ##            name: phone_number
+      ##            type: VARCHAR(20)
+      ##            constraints:
+      ##              nullable: false
+##
+      ##        - column:
+      ##            name: address
+      ##            type: VARCHAR(255)
+      ##            constraints:
+      ##              nullable: false
+
