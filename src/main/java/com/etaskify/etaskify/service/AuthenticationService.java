@@ -12,6 +12,8 @@ public interface AuthenticationService {
 
     AuthenticationDto signin(SigninRequest request);
 
+    String changePassword(String email, String newPassword);
+
     TokenPair refreshToken(UserDetails userDetails);
 
 }

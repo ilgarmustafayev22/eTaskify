@@ -2,11 +2,14 @@ package com.etaskify.etaskify.service.impl;
 
 import com.etaskify.etaskify.model.dto.MailDto;
 import com.etaskify.etaskify.service.MailService;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,7 +22,6 @@ public class MailServiceImpl implements MailService {
     private final JavaMailSender mailSender;
 
     @Override
-    @Transactional
     public void sendMail(MailDto mail) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(fromMail);

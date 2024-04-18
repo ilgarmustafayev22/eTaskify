@@ -2,8 +2,7 @@ package com.etaskify.etaskify.service.impl;
 
 import com.etaskify.etaskify.model.enums.TokenType;
 import com.etaskify.etaskify.service.JwtService;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;

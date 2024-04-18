@@ -12,10 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Validated
 @RestController
@@ -39,6 +36,11 @@ public class AuthenticationController {
     @PostMapping("/refresh")
     public ResponseEntity<TokenPair> refreshToken(@AuthenticationPrincipal UserDetails userDetails) {
         return ResponseEntity.ok(authenticationService.refreshToken(userDetails));
+    }
+
+    @PutMapping("/change-password")
+    public ResponseEntity<String> setPassword(@RequestParam String email,@RequestHeader String newPassword){
+        return ResponseEntity.ok(authenticationService.changePassword(email,newPassword));
     }
 
 }

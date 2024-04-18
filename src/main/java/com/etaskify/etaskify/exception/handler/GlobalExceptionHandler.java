@@ -1,9 +1,6 @@
 package com.etaskify.etaskify.exception.handler;
 
-import com.etaskify.etaskify.exception.OrganizationNotFoundException;
-import com.etaskify.etaskify.exception.TaskNotFoundException;
-import com.etaskify.etaskify.exception.UserNotFoundException;
-import com.etaskify.etaskify.exception.UsernameAlreadyExistsException;
+import com.etaskify.etaskify.exception.*;
 import com.etaskify.etaskify.model.dto.ErrorDto;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -60,6 +57,17 @@ public class GlobalExceptionHandler {
                 .body(new ErrorDto<>(404,
                         ex.getMessage(),
                         OrganizationNotFoundException.class,
+                        LocalDateTime.now()));
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = OtpNotFoundException.class)
+    public ResponseEntity<ErrorDto<OtpNotFoundException>> handleOtpNotFoundException(OtpNotFoundException ex) {
+        log.error(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new ErrorDto<>(404,
+                        ex.getMessage(),
+                        OtpNotFoundException.class,
                         LocalDateTime.now()));
     }
 

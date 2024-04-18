@@ -8,15 +8,20 @@ import com.etaskify.etaskify.exception.UserNotFoundException;
 import com.etaskify.etaskify.exception.UsernameAlreadyExistsException;
 import com.etaskify.etaskify.model.TokenPair;
 import com.etaskify.etaskify.model.dto.AuthenticationDto;
+import com.etaskify.etaskify.model.dto.MailDto;
 import com.etaskify.etaskify.model.enums.TokenType;
 import com.etaskify.etaskify.model.enums.UserRole;
+import com.etaskify.etaskify.model.request.ChangePasswordRequest;
 import com.etaskify.etaskify.model.request.SigninRequest;
 import com.etaskify.etaskify.model.request.SignupRequest;
 import com.etaskify.etaskify.service.AuthenticationService;
 import com.etaskify.etaskify.service.JwtService;
+import com.etaskify.etaskify.service.MailService;
 import com.etaskify.etaskify.service.UserService;
+import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,23 +29,23 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final JwtService jwtService;
-    private final PasswordEncoder encoder;
     private final UserService userService;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authManager;
     private final OrganizationRepository organizationRepository;
 
     @Override
     @Transactional
     public long signup(SignupRequest request) {
-        if (userService.existsByEmail(request.getEmail()))
-            throw new UsernameAlreadyExistsException("User with email " + request.getEmail() + " already exists");
+        assert !userService.existsByEmail(request.getEmail()) : "User with email " + request.getEmail() + " already exists";
 
         var organization = OrganizationEntity.builder()
                 .companyName(request.getCompanyName())
@@ -49,15 +54,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .build();
         organizationRepository.save(organization);
 
-        userRepository.save(UserEntity.builder()
+        UserEntity user = userRepository.save(UserEntity.builder()
                 .name(request.getName())
                 .surname(request.getSurname())
                 .email(request.getEmail())
-                .password(encoder.encode(request.getPassword()))
+                .password(passwordEncoder.encode(request.getPassword()))
                 .role(UserRole.ADMIN)
                 .createdDate(LocalDateTime.now())
                 .organization(OrganizationEntity.builder().id(organization.getId()).build())
                 .build());
+
         return organization.getId();
     }
 
@@ -77,6 +83,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .userId(user.getId())
                 .tokenPair(getTokenPair(user))
                 .build();
+    }
+
+    @Override
+    public String changePassword(String email, String password) {
+        UserEntity user =
+                userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User not found with this gmail: " + email));
+        user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
+        return "New Password set successfully login with new password";
     }
 
     @Override

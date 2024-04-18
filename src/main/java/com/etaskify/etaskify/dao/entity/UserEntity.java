@@ -45,6 +45,10 @@ public class UserEntity implements UserDetails {
     @Column(name = "created_date")
     private LocalDateTime createdDate;
 
+    @OneToOne(mappedBy = "user")
+    @JoinColumn(name = "forgot_password_id", referencedColumnName = "id")
+    private ForgotPasswordEntity forgotPassword;
+
     @ManyToOne
     @JoinColumn(name = "organization_id", referencedColumnName = "id")
     @JsonBackReference

@@ -33,15 +33,18 @@ databaseChangeLog:
                   name: password
                   type: VARCHAR(255)
               - column:
-                  name: organization_id
-                  type: BIGINT
-              - column:
                   name: role
                   type: VARCHAR(255)
               - column:
                   name: created_date
                   type: TIMESTAMP(3)
                   defaultValueComputed: now()
+              - column:
+                  name: organization_id
+                  type: BIGINT
+              - column:
+                  name: forgot_password_id
+                  type: BIGINT
 
 
             ##  - createTable:
